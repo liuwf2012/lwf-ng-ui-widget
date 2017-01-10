@@ -1,6 +1,20 @@
 /**
- * 倒计时标签
- * author : lwf 2016-11-10
+ * 	倒计时标签
+ * 	author : lwf 2016-11-10
+ *	
+ *	使用说明：
+ *	html:
+ *		<div><countdown count-from="countFrom" on-timeout="callback()"></countdown></div>
+ *
+ *	js: / ** controller代码（假设html已经在此controller下）** /
+ *
+ *		angular.module("myApp").controller("myCtrl",["$scope",function($scope){
+ *			$scope.countFrom = 30;  //计时时长，单位秒		
+ *			$scope.callback = function(){
+ *				//计时结束回调
+ *				//...这里可以重置countFrom来重新计时等等...
+ *			};
+ *		}]);
  */
 
 "use strict";
@@ -37,5 +51,4 @@ angular.module(moduleName,[])
 		}]
 	}
 }]);
-module.exports=moduleName;
 
