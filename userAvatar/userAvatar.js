@@ -15,7 +15,7 @@
  * 	lwf 2016-11-23
  */
 "use strict";
-var moduleName="kass.widget.userAvatar";
+var moduleName="lwf.widget.userAvatar";
 angular.module(moduleName,[])
 .directive("userAvatar",[function(){
 	return{
@@ -82,6 +82,12 @@ angular.module(moduleName,[])
 			scope.$on("SET_USER_AVATAR",function(event,newAvatar,emplid){
 				if(emplid==scope.uid){
 					scope.avatar = newAvatar;
+				}
+			});
+			//监听修改用户名事件(只修改自己的)
+			scope.$on("SET_USER_NAME",function(event,newName,emplid){
+				if(emplid==scope.uid){
+					scope.userName = newName;
 				}
 			});
 		}

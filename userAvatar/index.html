@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<title>userAvatar</title>
+	<link rel="stylesheet" href="./userAvatar.css">
+	<script src="//cdn.bootcss.com/angular.js/1.5.11/angular.min.js"></script>
+	<script src="./userAvatar.js"></script>
+</head>
+<body ng-controller="Ctrl">
+<center>
+<!-- user1 -->
+	<h3>user1：</h3>
+	<user-avatar uid="user1.uid" user-name="user1.name" avatar="user1.avatar" size="sm" on-click-avatar="clickAvatar(user1.name)"></user-avatar>
+	<user-avatar uid="user1.uid" user-name="user1.name" avatar="user1.avatar" size="md" on-click-avatar="clickAvatar(user1.name)"></user-avatar>
+	<user-avatar uid="user1.uid" user-name="user1.name" avatar="user1.avatar" size="lg" on-click-avatar="clickAvatar(user1.name)"></user-avatar>
+	<user-avatar uid="user1.uid" user-name="user1.name" avatar="user1.avatar" size="xlg" on-click-avatar="clickAvatar(user1.name)"></user-avatar>
+	<br/>
+<!-- user2 -->
+	<h3>user2：</h3>
+	<user-avatar uid="user2.uid" user-name="user2.name" avatar="user2.avatar" size="sm" on-click-avatar="clickAvatar(user2.name)"></user-avatar>
+	<user-avatar uid="user2.uid" user-name="user2.name" avatar="user2.avatar" size="md" on-click-avatar="clickAvatar(user2.name)"></user-avatar>
+	<user-avatar uid="user2.uid" user-name="user2.name" avatar="user2.avatar" size="lg" on-click-avatar="clickAvatar(user2.name)"></user-avatar>
+	<user-avatar uid="user2.uid" user-name="user2.name" avatar="user2.avatar" size="xlg" on-click-avatar="clickAvatar(user2.name)"></user-avatar>
+	<br/>
+<!-- user1_copy -->
+	<h3>user1_copy：</h3>
+	<user-avatar uid="user1_copy.uid" user-name="user1_copy.name" avatar="user1_copy.avatar" size="sm" on-click-avatar="clickAvatar(user1_copy.name)"></user-avatar>
+	<user-avatar uid="user1_copy.uid" user-name="user1_copy.name" avatar="user1_copy.avatar" size="md" on-click-avatar="clickAvatar(user1_copy.name)"></user-avatar>
+	<user-avatar uid="user1_copy.uid" user-name="user1_copy.name" avatar="user1_copy.avatar" size="lg" on-click-avatar="clickAvatar(user1_copy.name)"></user-avatar>
+	<user-avatar uid="user1_copy.uid" user-name="user1_copy.name" avatar="user1_copy.avatar" size="xlg" on-click-avatar="clickAvatar(user1_copy.name)"></user-avatar>
+	<br/>
+<!-- operation -->
+	<button ng-click="changeU1()">修改user1</button>
+	<button ng-click="broadcastU1()">修改user1，并广播</button>
+</center>
+	<script>
+		angular.module("myApp",["lwf.widget.userAvatar"])
+		.controller("Ctrl",["$scope","$rootScope", function($scope, $rootScope){
+			//模拟数据
+			$scope.user1 = {
+				uid: 1111,
+				name: "赵铁柱",
+				avatar: ""
+			};
+			$scope.user2 = {
+				uid: 2222,
+				name: "lily",
+				avatar: "https://avatars3.githubusercontent.com/u/7323242"
+			};
+			//复制数据
+			$scope.user1_copy = {};
+			angular.copy($scope.user1, $scope.user1_copy);
+
+			var randomName = ["赵铁柱","lily","Mike Yao","李四","王铁蛋","张三"],
+				randomAvatar = ["https://avatars3.githubusercontent.com/u/7323242",""];
+
+			$scope.changeU1 = function(){
+				var index = parseInt(Math.random()*1000)%6;
+				$scope.user1.name = randomName[index];
+				$scope.user1.avatar = $scope.user1.avatar=="" ? randomAvatar[0] : randomAvatar[1];
+			};
+			$scope.broadcastU1 = function(){
+				var index = parseInt(Math.random()*1000)%6;
+				$scope.user1.name = randomName[index];
+				$scope.user1.avatar = $scope.user1.avatar=="" ? randomAvatar[0] : randomAvatar[1];
+
+				$rootScope.$broadcast("SET_USER_NAME", $scope.user1.name, $scope.user1.uid);
+				$rootScope.$broadcast("SET_USER_AVATAR", $scope.user1.avatar, $scope.user1.uid);
+			};
+			//头像点击
+			$scope.clickAvatar = function(name){
+				alert("I'm "+name);
+			}
+
+		}]);
+	</script>
+</body>
+</html>
